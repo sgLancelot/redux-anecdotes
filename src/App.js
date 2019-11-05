@@ -1,16 +1,27 @@
-import React from 'react';
+import React from 'react'
 
 const App = (props) => {
   const anecdotes = props.store.getState()
 
   const vote = (id) => {
-    console.log('vote', id)
+    props.store.dispatch({
+      type: 'VOTE',
+      data: { id }
+    })
+  }
+
+  const addAnec = (event) => {
+    event.preventDefault()
+    props.store.dispatch({
+      type: 'NEW_ANEC',
+      data: {content: event.target.anec.value}
+    })
   }
 
   return (
     <div>
       <h2>Anecdotes</h2>
-      {anecdotes.map(anecdote =>
+      {anecdotes.sort((a,b) => b.votes - a.votes).map(anecdote =>
         <div key={anecdote.id}>
           <div>
             {anecdote.content}
@@ -22,9 +33,9 @@ const App = (props) => {
         </div>
       )}
       <h2>create new</h2>
-      <form>
-        <div><input /></div>
-        <button>create</button>
+      <form onSubmit={addAnec}>
+        <div><input name='anec' /></div>
+        <button type='submit'>create</button>
       </form>
     </div>
   )
