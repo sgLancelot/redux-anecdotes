@@ -7,12 +7,12 @@ const Notification = (props) => {
     borderWidth: 1
   }
  
-  if (!props.store.getState().find(anec => anec.noti === 'SHOW')) {
+  if (!props.store.getState().anec.find(anec => anec.noti === 'SHOW')) {
     return null
   }
   return (
     <div style={style}>
-      {props.store.getState().map(anec => anec.noti === 'SHOW' ? anec.content : null)}
+      {props.store.getState().anec.map(anec => anec.noti === 'SHOW' ? anec.content : null)}
     </div>
   )
 }

@@ -40,7 +40,7 @@ export const hideNoti = () => {
 
 const initialState = anecdotesAtStart.map(asObject)
 
-const reducer = (state = initialState, action) => {
+const anecReducer = (state = initialState, action) => {
   switch(action.type) {
     case 'VOTE':
       const anecToChange = state.find(anec => anec.id === action.data.id)
@@ -64,10 +64,12 @@ const reducer = (state = initialState, action) => {
         ...anecWithNoti,
         noti: 'HIDE'
       }
+      console.log(state)
+      console.log(state[0].id)
       return state.map(anec => anec.id !== anecWithNoti.id ? anec : anecNotiClear)
     default:
       return state
   }
 }
 
-export default reducer
+export default anecReducer
