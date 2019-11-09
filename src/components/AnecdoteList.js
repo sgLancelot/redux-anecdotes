@@ -1,11 +1,12 @@
 import React from 'react'
-import { addVote } from '../reducers/anecdoteReducer'
+import { addVote, hideNoti } from '../reducers/anecdoteReducer'
 
 const AnecdoteList = (props) => {
     const anecdotes = props.store.getState()
 
     const vote = (id) => {
         props.store.dispatch(addVote(id))
+        setTimeout(() => props.store.dispatch(hideNoti()), 5000)
     }
 
     return (

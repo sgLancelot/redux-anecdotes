@@ -13,7 +13,8 @@ const asObject = (anecdote) => {
   return {
     content: anecdote,
     id: getId(),
-    votes: 0
+    votes: 0,
+    noti: 'HIDE'
   }
 }
 
@@ -31,24 +32,39 @@ export const newAnec = (content) => {
   }
 }
 
+export const hideNoti = () => {
+  return {
+    type: 'HIDE_NOTI'
+  }
+}
+
 const initialState = anecdotesAtStart.map(asObject)
 
 const reducer = (state = initialState, action) => {
   switch(action.type) {
     case 'VOTE':
-      const anecToChange = state.find(anec=> anec.id === action.data.id)
+      const anecToChange = state.find(anec => anec.id === action.data.id)
       const changedAnec = {
         ...anecToChange,
-        votes: anecToChange.votes + 1
+        votes: anecToChange.votes + 1,
+        noti: 'SHOW'
       }
       return state.map(anec => anec.id !== changedAnec.id ? anec : changedAnec)
-      case 'NEW_ANEC':
-        const newAnec = {
-          content: action.data.content,
-          id: getId(),
-          votes: 0
-        }
-        return state.concat(newAnec)
+    case 'NEW_ANEC':
+      const newAnec = {
+        content: action.data.content,
+        id: getId(),
+        votes: 0,
+        noti: 'SHOW'
+      }
+      return state.concat(newAnec)
+    case 'HIDE_NOTI':
+      const anecWithNoti = state.find(anec => anec.noti === 'SHOW')
+      const anecNotiClear = {
+        ...anecWithNoti,
+        noti: 'HIDE'
+      }
+      return state.map(anec => anec.id !== anecWithNoti.id ? anec : anecNotiClear)
     default:
       return state
   }
