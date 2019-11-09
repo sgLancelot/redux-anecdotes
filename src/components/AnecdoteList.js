@@ -1,5 +1,6 @@
 import React from 'react'
-import { addVote, hideNoti } from '../reducers/anecdoteReducer'
+import { addVote } from '../reducers/anecdoteReducer'
+import { showNoti, hideNoti } from '../reducers/notiReducer'
 
 const AnecdoteList = (props) => {
     const { anec, filter } = props.store.getState()
@@ -10,8 +11,9 @@ const AnecdoteList = (props) => {
       return anec.filter(anec => anec.content.includes(filter))
     }
 
-    const vote = (id) => {
-        props.store.dispatch(addVote(id))
+    const vote = (content) => {
+        props.store.dispatch(addVote(content))
+        props.store.dispatch(showNoti(content))
         setTimeout(() => props.store.dispatch(hideNoti()), 5000)
     }
 
@@ -24,7 +26,7 @@ const AnecdoteList = (props) => {
               </div>
               <div>
                 has {anecdote.votes}
-                <button onClick={() => vote(anecdote.id)}>vote</button>
+                <button onClick={() => vote(anecdote.content)}>vote</button>
               </div>
             </div>
         )}

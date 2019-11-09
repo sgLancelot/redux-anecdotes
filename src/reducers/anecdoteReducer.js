@@ -14,14 +14,13 @@ const asObject = (anecdote) => {
     content: anecdote,
     id: getId(),
     votes: 0,
-    noti: 'HIDE'
   }
 }
 
-export const addVote = (id) => {
+export const addVote = (content) => {
   return {
     type: 'VOTE',
-    data: { id }
+    data: { content }
   } 
 }
 
@@ -31,23 +30,15 @@ export const newAnec = (content) => {
     data: { content }
   }
 }
-
-export const hideNoti = () => {
-  return {
-    type: 'HIDE_NOTI'
-  }
-}
-
 const initialState = anecdotesAtStart.map(asObject)
 
 const anecReducer = (state = initialState, action) => {
   switch(action.type) {
     case 'VOTE':
-      const anecToChange = state.find(anec => anec.id === action.data.id)
+      const anecToChange = state.find(anec => anec.content === action.data.content)
       const changedAnec = {
         ...anecToChange,
         votes: anecToChange.votes + 1,
-        noti: 'SHOW'
       }
       return state.map(anec => anec.id !== changedAnec.id ? anec : changedAnec)
     case 'NEW_ANEC':
@@ -55,18 +46,8 @@ const anecReducer = (state = initialState, action) => {
         content: action.data.content,
         id: getId(),
         votes: 0,
-        noti: 'SHOW'
       }
       return state.concat(newAnec)
-    case 'HIDE_NOTI':
-      const anecWithNoti = state.find(anec => anec.noti === 'SHOW')
-      const anecNotiClear = {
-        ...anecWithNoti,
-        noti: 'HIDE'
-      }
-      console.log(state)
-      console.log(state[0].id)
-      return state.map(anec => anec.id !== anecWithNoti.id ? anec : anecNotiClear)
     default:
       return state
   }

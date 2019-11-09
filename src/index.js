@@ -4,14 +4,15 @@ import { createStore, combineReducers } from 'redux'
 import App from './App'
 import anecReducer from './reducers/anecdoteReducer'
 import filterReducer from './reducers/filterReducer'
+import notiReducer from './reducers/notiReducer'
 
 const reducer = combineReducers({
   anec: anecReducer,
-  filter: filterReducer
+  filter: filterReducer,
+  noti: notiReducer
 })
 
 const store = createStore(reducer)
-console.log(store.getState())
 
 const render = () => {
   ReactDOM.render(

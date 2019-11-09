@@ -1,10 +1,12 @@
 import React from 'react'
-import { newAnec, hideNoti } from '../reducers/anecdoteReducer'
+import { newAnec } from '../reducers/anecdoteReducer'
+import { showNoti, hideNoti } from '../reducers/notiReducer'
 
 const AnecdoteForm = (props) => {
     const addAnec = (event) => {
         event.preventDefault()
         props.store.dispatch(newAnec(event.target.anec.value))
+        props.store.dispatch(showNoti(event.target.anec.value))
         setTimeout(() => props.store.dispatch(hideNoti()), 5000)
     }
 
