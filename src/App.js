@@ -8,7 +8,6 @@ const App = (props) => {
   return (
     <div>
       <h2>Anecdotes</h2>
-      <Notification store={props.store} />
       <Filter store={props.store} />
       <AnecdoteList store={props.store} />
       <AnecdoteForm store={props.store} />
@@ -17,3 +16,5 @@ const App = (props) => {
 }
 
 export default App
+
+//<Notification store={props.store} />
