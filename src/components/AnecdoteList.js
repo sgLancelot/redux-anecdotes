@@ -3,7 +3,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { addVote } from '../reducers/anecdoteReducer'
-import { showNoti, hideNoti } from '../reducers/notiReducer'
+//import { showNoti, hideNoti } from '../reducers/notiReducer'
 
 const AnecdoteList = (props) => {
     //const { anec, filter } = props.store.getState()
