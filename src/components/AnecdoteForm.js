@@ -2,12 +2,16 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { newAnec } from '../reducers/anecdoteReducer'
 import { showNoti, hideNoti } from '../reducers/notiReducer'
+import anecService from '../services/anec'
 
 const AnecdoteForm = (props) => {
-    const addAnec = (event) => {
+    const addAnec = async (event) => {
         event.preventDefault()
-        props.newAnec(event.target.anec.value)
-        props.showNoti(event.target.anec.value)
+        const content = event.target.anec.value
+        event.target.anec.value = ''
+        const postedAnec = await anecService.createNew(content)
+        props.newAnec(postedAnec)
+        props.showNoti(content)
         setTimeout(() => props.hideNoti(), 5000)
     }
 
