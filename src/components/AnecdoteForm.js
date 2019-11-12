@@ -1,13 +1,14 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { newAnec } from '../reducers/anecdoteReducer'
 import { showNoti, hideNoti } from '../reducers/notiReducer'
 
 const AnecdoteForm = (props) => {
     const addAnec = (event) => {
         event.preventDefault()
-        props.store.dispatch(newAnec(event.target.anec.value))
-        props.store.dispatch(showNoti(event.target.anec.value))
-        setTimeout(() => props.store.dispatch(hideNoti()), 5000)
+        props.newAnec(event.target.anec.value)
+        props.showNoti(event.target.anec.value)
+        setTimeout(() => props.hideNoti(), 5000)
     }
 
     return (
@@ -21,4 +22,11 @@ const AnecdoteForm = (props) => {
     )
 }
 
-export default AnecdoteForm
+const mapDispatchToProps = {
+    showNoti,
+    hideNoti,
+    newAnec
+}
+
+const ConnectedAnecForm = connect(null, mapDispatchToProps)(AnecdoteForm)
+export default ConnectedAnecForm

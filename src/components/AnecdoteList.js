@@ -1,12 +1,9 @@
-// Voting for and creating new anecdotes does not need to work
-
 import React from 'react'
 import { connect } from 'react-redux'
 import { addVote } from '../reducers/anecdoteReducer'
-//import { showNoti, hideNoti } from '../reducers/notiReducer'
+import { showNoti, hideNoti } from '../reducers/notiReducer'
 
 const AnecdoteList = (props) => {
-    //const { anec, filter } = props.store.getState()
     const anecToShow = () => {
       if (props.filter === 'ALL') {
         return props.anec
@@ -15,9 +12,9 @@ const AnecdoteList = (props) => {
     }
 
     const vote = (content) => {
-        props.store.dispatch(addVote(content))
-        //props.store.dispatch(showNoti(content))
-        //setTimeout(() => props.store.dispatch(hideNoti()), 5000)
+        props.addVote(content)
+        props.showNoti(content)
+        setTimeout(() => props.hideNoti(), 5000)
     }
 
     return (
@@ -38,21 +35,17 @@ const AnecdoteList = (props) => {
 }
 
 const mapStateToProps = state => {
-  console.log(state)
   return {
     anec: state.anec,
     filter: state.filter
   }
 }
 
-const ConnectedAnec = connect(mapStateToProps)(AnecdoteList)
+const mapDispatchToProps = {
+  showNoti,
+  hideNoti,
+  addVote
+}
+
+const ConnectedAnec = connect(mapStateToProps, mapDispatchToProps)(AnecdoteList)
 export default ConnectedAnec
-/*
-const mapStateToProps = (state) => {
-  // sometimes it is useful to console log from mapStateToProps
-  console.log(state)
-  return {
-    anecdotes: state.anecdotes,
-    filter: state.filter
-  }
-}*/
