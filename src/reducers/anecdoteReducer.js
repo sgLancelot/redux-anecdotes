@@ -1,21 +1,38 @@
-export const initAnec = (anec) => {
-  return {
-    type: 'INIT_ANEC',
-    data: anec
+import anecService from '../services/anec'
+
+export const initAnec = () => {
+  return async dispatch => {
+    const anec = await anecService.getAll()
+    dispatch({
+      type: 'INIT_ANEC',
+      data: anec
+    })
   }
 }
 
 export const addVote = (content) => {
-  return {
-    type: 'VOTE',
-    data: { content }
+  return async dispatch => {
+    const anec = await anecService.getAll()
+    const anecToChange = await anec.find(anec => anec.content === content)
+    const changedAnec = {
+      ...anecToChange,
+      votes: anecToChange.votes + 1,
+    }
+    const putAnec = await anecService.addVote(changedAnec, anecToChange.id)
+    dispatch({
+      type: 'VOTE',
+      data: putAnec
+    })
   } 
 }
 
-export const newAnec = (data) => {
-  return {
-    type: 'NEW_ANEC',
-    data
+export const newAnec = (content) => {
+  return async dispatch => {
+    const postedAnec = await anecService.createNew(content)
+    dispatch ({
+      type: 'NEW_ANEC',
+      data: postedAnec
+    })
   }
 }
 
